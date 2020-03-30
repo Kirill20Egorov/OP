@@ -58,5 +58,5 @@ BEGIN {TestReadNumber}
   Count := 0;
   Check := TRUE;
   ReadNumber(INPUT, Number);
-  WRITELN(Number);
+  WRITELN(Number)
 END.  {TestReadNumber}

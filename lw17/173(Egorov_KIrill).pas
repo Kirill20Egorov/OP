@@ -50,7 +50,7 @@ BEGIN {ReadNumber}
             END
         END
       ELSE
-        Check := FALSE;
+        Check := FALSE
     END
 END; {ReadNumber}
 BEGIN {TestReadNumber}
@@ -80,7 +80,7 @@ BEGIN {TestReadNumber}
           THEN
             BEGIN
               Check := TRUE;
-              Number := 0;
+              Number := 0
             END;
           Count := Count + 1
         END
@@ -88,5 +88,5 @@ BEGIN {TestReadNumber}
   WRITELN('Введено чисел: ', Count);
   WRITELN('Сумма всех: ', Sum, ' Среднее арифм: ', Sum DIV Count);
   WRITELN('Min: ', Min);
-  WRITELN('Max: ', Max);
+  WRITELN('Max: ', Max)
 END.  {TestReadNumber}
