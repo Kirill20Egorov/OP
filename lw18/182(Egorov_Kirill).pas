@@ -25,7 +25,7 @@ END;
 BEGIN {AverageScore}
   ClassTotal := 0;
   WRITELN('Student averages:');
-  WRITELN('Введите фамилию ученика и его оценки через пробел');
+  WRITELN('Write surname and results due to probels between them');
   Student := 1;
   WHILE Student <= ClassSize
   DO 
@@ -42,7 +42,7 @@ BEGIN {AverageScore}
           READ(NextScore);
           IF (NextScore < 0) OR (NextScore > 100)
           THEN
-            WRITELN('Некорректный ввод баллов, вы ввели: ', NextScore, ' введите другое число вместо этого')
+            WRITELN('Uncorrected data: ', NextScore, ' write another marks')
           ELSE
             BEGIN
               TotalScore := TotalScore + NextScore;
@@ -55,9 +55,9 @@ BEGIN {AverageScore}
       Ave := TotalScore DIV NumberOfScores; 
       IF Ave MOD 10 >= 5
       THEN
-        WRITELN('Средний результат ', Student, '-ого ученичка: ', Ave DIV 10 + 1)
+        WRITELN(Ave DIV 10 + 1)
       ELSE
-        WRITELN('Средний результат ', Student, '-ого ученичка: ', Ave DIV 10);
+        WRITELN(Ave DIV 10);
       ClassTotal := ClassTotal + TotalScore;
       Student := Student + 1
     END;
