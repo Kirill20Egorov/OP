@@ -42,7 +42,7 @@ BEGIN {AverageScore}
           READ(NextScore);
           IF (NextScore < 0) OR (NextScore > 100)
           THEN
-            WRITELN('Uncorrected data: ', NextScore, ' write another marks')
+            WRITELN('Uncorrected data: ', NextScore, ' write another mark instead this')
           ELSE
             BEGIN
               TotalScore := TotalScore + NextScore;
