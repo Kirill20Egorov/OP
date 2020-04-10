@@ -2,8 +2,6 @@ PROGRAM TestReadNumber(INPUT, OUTPUT);
 VAR
   Count, Number: INTEGER;
   Check: BOOLEAN;
-CONST
-  MaxInt = 32767;
 PROCEDURE ReadDigit(VAR F: TEXT; VAR D: INTEGER);
 {Считывает текущий символ из файла, если он - цифра, возвращает его 
  преобразуя в значение типа INTEGER. Если считанный символ не цифра
@@ -32,22 +30,27 @@ PROCEDURE ReadNumber(VAR F: TEXT; VAR N: INTEGER);
 VAR
   Digit: INTEGER;
 BEGIN {ReadNumber}
-  WHILE ((NOT EOLN(INPUT)) AND (Check))
+  WHILE Check
   DO
     BEGIN
-      ReadDigit(F, Digit);
+      ReadDigit(F, Digit);              
       IF Digit <> -1
       THEN
         BEGIN
-          N := N * 10;
-          N := N + Digit;
-          IF N > MaxInt
+          //(ЕСЛИ БЕЗ МЛАДШИХ РАЗРЯДОВ MAXINT МЕНЬШЕ ВВЕДЕННОГО ЧИСЛА) ИЛИ
+          //((РАЗРЯДЫ РАВНЫ) И (МЛАДШИЙ РАЗРЯД ВВЕДЕННОГО ЧИСЛА БОЛЬШЕ ЧЕМ У MAXINT))
+          IF  ((MAXINT DIV 10 < N) OR (((MAXINT DIV 10 = N) AND ((MAXINT MOD 10) < Digit))))
           THEN
             BEGIN
               Check := FALSE;
               N := -1;
               WRITELN('Error the number > MAXINT')
             END
+          ELSE
+            BEGIN      
+              N := N * 10;
+              N := N + Digit
+            END;
         END
       ELSE
         Check := FALSE
