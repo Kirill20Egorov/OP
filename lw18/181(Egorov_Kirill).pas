@@ -18,7 +18,7 @@ BEGIN {AverageScore}
     BEGIN
       TotalScore := 0;
       WhichScore := 1;  
-      WHILE WhichScore <= 4
+      WHILE WhichScore <= NumberOfScores
       DO
         BEGIN
           READ(NextScore);
@@ -36,8 +36,7 @@ BEGIN {AverageScore}
       ClassTotal := ClassTotal + TotalScore;  
       Student := Student + 1
     END;
-  WRITELN;
-  WRITELN ('Class average:');
+  WRITELN('Class average:');
   ClassTotal := ClassTotal DIV (ClassSize *NumberOfScores);
   WRITELN(ClassTotal DIV 10, '.', ClassTotal MOD 10:1)
 END.  {AverageScore}
