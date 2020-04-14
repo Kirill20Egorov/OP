@@ -1,6 +1,6 @@
 PROGRAM TestReadNumber(INPUT, OUTPUT);
 VAR
-  Count, Number: INTEGER;
+  Number: INTEGER;
   Check: BOOLEAN;
 PROCEDURE ReadDigit(VAR F: TEXT; VAR D: INTEGER);
 {Ñ÷èòûâàåò òåêóùèé ñèìâîë èç ôàéëà, åñëè îí - öèôðà, âîçâðàùàåò åãî 
@@ -60,7 +60,6 @@ BEGIN {ReadNumber}
 END; {ReadNumber}
 BEGIN {TestReadNumber}
   Number := 0;
-  Count := 0;
   Check := TRUE;
   ReadNumber(INPUT, Number);
   WRITELN(Number)
