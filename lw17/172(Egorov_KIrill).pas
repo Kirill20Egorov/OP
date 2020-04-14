@@ -30,6 +30,7 @@ PROCEDURE ReadNumber(VAR F: TEXT; VAR N: INTEGER);
 VAR
   Digit: INTEGER;
 BEGIN {ReadNumber}
+  WRITELN('MAXINT=', MAXINT);
   WHILE Check
   DO
     BEGIN
