@@ -10,10 +10,8 @@ VAR
 PROCEDURE FindMultipartNumbers(VAR Prime: INTEGER; VAR ResourceSieve: SubsetofInt);
 VAR
   Number: INTEGER;
-  DeletingSieve: SubsetofInt;
 BEGIN
   Number := Prime;
-  DeletingSieve := [];
   WRITE('Prime number: ', Number, ' Delete from Sieve: ');
   WHILE Number <= Max
   DO
@@ -21,12 +19,11 @@ BEGIN
       IF (Number MOD Prime = 0) AND (Number IN Sieve)
       THEN
         BEGIN
-          DeletingSieve := DeletingSieve + [Number];
+          ResourceSieve := ResourceSieve - [Number];
           WRITE(Number, ' ')
         END;   
       Number := Number + 1
-    END;
-  ResourceSieve := ResourceSieve - DeletingSieve  
+    END
 END;  
 PROCEDURE FindNextPrime(VAR Prime: INTEGER; VAR ResourceSieve: SubsetofInt);
 VAR
