@@ -8,6 +8,7 @@ PROCEDURE ReadDigit(VAR F: TEXT; VAR D: INTEGER);
 VAR
   Ch: CHAR;
 BEGIN {ReadDigit}
+  Ch := '';
   IF NOT EOLN(INPUT)
   THEN
     READ(F, Ch);
@@ -25,6 +26,7 @@ BEGIN {ReadDigit}
 END; {ReadDigit}
 BEGIN {TestReadDigit}                                                    
   Count := 0;
+  I := 0;
   WHILE I <> -1
   DO
     BEGIN

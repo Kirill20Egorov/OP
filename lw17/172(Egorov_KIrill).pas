@@ -1,7 +1,6 @@
 PROGRAM TestReadNumber(INPUT, OUTPUT);
 VAR
   Number: INTEGER;
-  Check: BOOLEAN;
 PROCEDURE ReadDigit(VAR F: TEXT; VAR D: INTEGER);
 {Ñ÷èòûâàåò òåêóùèé ñèìâîë èç ôàéëà, åñëè îí - öèôðà, âîçâðàùàåò åãî 
  ïðåîáðàçóÿ â çíà÷åíèå òèïà INTEGER. Åñëè ñ÷èòàííûé ñèìâîë íå öèôðà
@@ -9,6 +8,7 @@ PROCEDURE ReadDigit(VAR F: TEXT; VAR D: INTEGER);
 VAR
   Ch: CHAR;
 BEGIN {ReadDigit}
+  Ch := '';
   IF NOT EOLN(F)
   THEN
     READ(F, Ch);
@@ -29,7 +29,11 @@ PROCEDURE ReadNumber(VAR F: TEXT; VAR N: INTEGER);
  öåëîå ÷èñëî N}
 VAR
   Digit: INTEGER;
+  Check: BOOLEAN;
 BEGIN {ReadNumber}
+  Digit := 0;
+  N := 0;
+  Check := TRUE;
   WRITELN('MAXINT=', MAXINT);
   WHILE Check
   DO
@@ -59,8 +63,6 @@ BEGIN {ReadNumber}
     END
 END; {ReadNumber}
 BEGIN {TestReadNumber}
-  Number := 0;
-  Check := TRUE;
   ReadNumber(INPUT, Number);
   WRITELN(Number)
 END.  {TestReadNumber}

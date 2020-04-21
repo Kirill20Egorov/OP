@@ -4,6 +4,9 @@ CONST
   ClassSize = 4;
 TYPE
   Score = 0 .. 100;
+CONST
+  MaxScore = 100;
+  MinScore = 0;
 VAR
   WhichScore: 1 .. NumberOfScores;
   Student: 1 .. ClassSize;
@@ -14,11 +17,11 @@ VAR
 PROCEDURE ProcessingFamily(VAR Res, Des: TEXT);
 VAR
   Ch: CHAR;
-BEGIN
+BEGIN    
   WHILE (Ch <> ' ')
   DO
     BEGIN
-      READ(Res, Ch);
+      READ(Res, Ch); 
       WRITE(Des, Ch)
     END
 END;
@@ -33,14 +36,16 @@ BEGIN {AverageScore}
       TotalScore := 0;
       WhichScore := 1;  
       REWRITE(SurName);
-      ProcessingFamily(INPUT, SurName);
+      IF NOT EOLN (INPUT)
+      THEN
+        ProcessingFamily(INPUT, SurName);
       WRITELN(SurName, ' ');
       RESET(SurName);   
-      WHILE WhichScore <= NumberOfScores
+      WHILE (WhichScore <= NumberOfScores) AND (NOT EOLN)
       DO
         BEGIN
           READ(NextScore);
-          IF (NextScore < 0) OR (NextScore > 100)
+          IF (NextScore < MinScore) OR (NextScore > MaxScore)
           THEN
             WRITELN('Uncorrected data: ', NextScore, ' write another mark instead this')
           ELSE
