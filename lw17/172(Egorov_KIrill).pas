@@ -8,10 +8,7 @@ PROCEDURE ReadDigit(VAR F: TEXT; VAR D: INTEGER);
 VAR
   Ch: CHAR;
 BEGIN {ReadDigit}
-  Ch := '';
-  IF NOT EOLN(F)
-  THEN
-    READ(F, Ch);
+  READ(F, Ch);
   IF Ch = '0' THEN D := 0 ELSE
   IF Ch = '1' THEN D := 1 ELSE    
   IF Ch = '2' THEN D := 2 ELSE
@@ -35,7 +32,7 @@ BEGIN {ReadNumber}
   N := 0;
   Check := TRUE;
   WRITELN('MAXINT=', MAXINT);
-  WHILE Check
+  WHILE (Check) AND NOT(EOLN(INPUT))
   DO
     BEGIN
       ReadDigit(F, Digit);              
