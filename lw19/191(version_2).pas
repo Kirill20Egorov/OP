@@ -16,7 +16,7 @@ BEGIN
   WHILE Number <= Max
   DO
     BEGIN
-      IF (Number MOD Prime = 0) AND (Number IN Sieve)
+      IF (Number MOD Prime = 0) AND (Number IN ResourceSieve)
       THEN
         BEGIN
           ResourceSieve := ResourceSieve - [Number];
@@ -39,7 +39,7 @@ BEGIN
         Prime := Curr
       ELSE
         Curr := Curr +  1
-    END
+    END              
 END;      
 BEGIN
   Sieve := [Min..Max];
