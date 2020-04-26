@@ -18,10 +18,10 @@ PROCEDURE ProcessingFamily(VAR Res, Des: TEXT);
 VAR
   Ch: CHAR;
 BEGIN    
-  WHILE (Ch <> ' ')
+  WHILE (Ch <> ' ') AND NOT(EOLN(Res))
   DO
     BEGIN
-      READ(Res, Ch); 
+      READ(Res, Ch);
       WRITE(Des, Ch)
     END
 END;
@@ -41,13 +41,13 @@ BEGIN {AverageScore}
         ProcessingFamily(INPUT, SurName);
       WRITELN(SurName, ' ');
       RESET(SurName);   
-      WHILE (WhichScore <= NumberOfScores) AND (NOT EOLN)
+      WHILE (WhichScore <= NumberOfScores) AND (NOT EOLN(INPUT))
       DO
         BEGIN
           READ(NextScore);
           IF (NextScore < MinScore) OR (NextScore > MaxScore)
           THEN
-            WRITELN('Uncorrected data: ', NextScore, ' write another mark instead this')
+            WRITELN('Incorrected data: ', NextScore, ' write another mark instead this')
           ELSE
             BEGIN
               TotalScore := TotalScore + NextScore;
