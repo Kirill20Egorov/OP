@@ -40,7 +40,6 @@ BEGIN {Initialize}
   Code['Y'] := 'B';
   Code['Z'] := 'A'
 END;  {Initialize}
- 
 PROCEDURE Encode(VAR S: Str);
 {Выводит символы из Code, соответствующие символам из S}
 VAR
@@ -55,7 +54,6 @@ BEGIN {Encode}
       WRITE(S[Index]);
   WRITELN
 END;  {Encode}
- 
 BEGIN {Encryption}
   {Инициализировать Code}
   ASSIGN(cipher, 'cipher.txt');
