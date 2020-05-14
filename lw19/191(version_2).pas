@@ -7,7 +7,23 @@ TYPE
 VAR
   Sieve: SubsetofInt;
   PrimeNumber: INTEGER;
-PROCEDURE FindMultipartNumbers(VAR Prime: INTEGER; VAR ResourceSieve: SubsetofInt);
+PROCEDURE FindNextPrime(VAR Prime: INTEGER; VAR ResourceSieve: SubsetofInt);
+VAR
+  Curr: INTEGER;  
+BEGIN
+  Curr := Prime;
+  Prime := 0;  
+  WHILE (Prime = 0) AND (Curr <= Max)
+  DO
+    BEGIN
+      IF Curr IN ResourceSieve
+      THEN
+        Prime := Curr
+      ELSE
+        Curr := Curr +  1
+    END              
+END; 
+PROCEDURE FindMultipartNumbers(Max: INTEGER; VAR Prime: INTEGER; VAR ResourceSieve: SubsetofInt);
 VAR
   Number: INTEGER;
 BEGIN
@@ -22,33 +38,17 @@ BEGIN
           ResourceSieve := ResourceSieve - [Number];
           WRITE(Number, ' ')
         END;   
-      Number := Number + 1
-    END
-END;  
-PROCEDURE FindNextPrime(VAR Prime: INTEGER; VAR ResourceSieve: SubsetofInt);
-VAR
-  Curr: INTEGER;  
-BEGIN
-  Curr := 0;  
-  Prime := 0;
-  WHILE (Prime = 0) AND (Curr <= Max)
-  DO
-    BEGIN
-      IF Curr IN ResourceSieve
-      THEN
-        Prime := Curr
-      ELSE
-        Curr := Curr +  1
-    END              
-END;      
+      Number := Number + Prime
+    END;
+  FindNextPrime(Prime, ResourceSieve)
+END;       
 BEGIN
   Sieve := [Min..Max];
   PrimeNumber := Min;
   WHILE Sieve <> []
   DO
     BEGIN   
-      FindMultipartNumbers(PrimeNumber, Sieve);   
-      FindNextPrime(PrimeNumber, Sieve);
+      FindMultipartNumbers(Max, PrimeNumber, Sieve);   
       WRITELN
     END
 END.
