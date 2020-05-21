@@ -2,6 +2,8 @@ PROGRAM Print(INPUT, OUTPUT);
 CONST
   MinPosition = 1;
   MaxPosition = 25;
+  LineSize = 5;
+  SymbolForPrint = 'X';
   SymbolA = [3, 7, 9, 11, 12, 13, 14, 15, 16, 20];
   SymbolC = [1, 2, 3, 4, 5, 6, 11, 16, 21, 22, 23, 24, 25];
   SymbolE = [1, 2, 3, 4, 5, 6, 11, 12, 13, 14, 15, 16, 21, 22, 23, 24, 25]; 
@@ -16,13 +18,12 @@ CONST
   SymbolS = [1, 2, 3, 4, 5, 6, 11, 12, 13, 14, 15, 20, 21, 22, 23, 24, 25];
   SymbolT = [1, 2, 3, 4, 5, 8, 13, 18, 23];
   SymbolU = [1, 5, 6, 10, 11, 15, 16, 20, 22, 23, 24];
-  SymbolX = [1, 5, 7, 9, 13, 17, 19, 21, 25];
   SymbolY = [1, 5, 7, 9, 13, 18, 23];
   SymbolZ = [1, 2, 3, 4, 5, 9, 13, 17, 21, 22, 23, 24, 25];
 TYPE
   Sieve = SET OF MinPosition..MaxPosition;
 VAR
-  Symbol: CHAR;
+  Ch: CHAR;
 PROCEDURE PrintSymbol(CombinationOfSymbol: Sieve);
 VAR
   Count: INTEGER;
@@ -32,20 +33,20 @@ BEGIN
     BEGIN         
       IF Count IN CombinationOfSymbol
       THEN
-        WRITE('X')
+        WRITE(SymbolForPrint)
       ELSE
         WRITE(' ');
-      IF (Count MOD 5 = 0)
+      IF (Count MOD LineSize = 0)
       THEN
         WRITELN
     END
 END;
+PROCEDURE FindSymbol(VAR Ch: CHAR);
 BEGIN
-  WRITELN('WRITE ONLY ONE OF THE FOLLOWING UPPERCASE CHARACTER: A, C, E, F, H, I, L, M, N, O, P, S, T, U, X, Y, Z'); 
   IF NOT EOLN(INPUT)
   THEN
-    READ(INPUT, Symbol);
-  CASE Symbol OF
+    READ(INPUT, Ch);   
+  CASE Ch OF
     'A': PrintSymbol(SymbolA);
     'C': PrintSymbol(SymbolC);
     'E': PrintSymbol(SymbolE);
@@ -60,9 +61,12 @@ BEGIN
     'S': PrintSymbol(SymbolS);
     'T': PrintSymbol(SymbolT);
     'U': PrintSymbol(SymbolU);
-    'X': PrintSymbol(SymbolX);
     'Y': PrintSymbol(SymbolY);
     'Z': PrintSymbol(SymbolZ)                 
-    ELSE WRITELN('COULDN''T FIND THIS CHARACTER') 
+    ELSE WRITELN('COULDN''T FIND CHARACTER') 
   END
+END;
+BEGIN
+  WRITELN('WRITE ONLY ONE OF THE FOLLOWING UPPERCASE CHARACTER: A, C, E, F, H, I, L, M, N, O, P, S, T, U, Y, Z'); 
+  FindSymbol(Ch)
 END.
