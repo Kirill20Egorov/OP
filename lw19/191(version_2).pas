@@ -28,16 +28,13 @@ VAR
   Number: INTEGER;
 BEGIN
   Number := Prime;
-  WRITE('Prime number: ', Number, ' Delete from Sieve: ');
+  WRITE(Number, ' ');
   WHILE Number <= Max
   DO
     BEGIN
       IF (Number MOD Prime = 0) AND (Number IN ResourceSieve)
       THEN
-        BEGIN
-          ResourceSieve := ResourceSieve - [Number];
-          WRITE(Number, ' ')
-        END;   
+        ResourceSieve := ResourceSieve - [Number];
       Number := Number + Prime
     END;
   FindNextPrime(Prime, ResourceSieve)
@@ -45,10 +42,9 @@ END;
 BEGIN
   Sieve := [Min..Max];
   PrimeNumber := Min;
+  WRITE('Prime numbers: ');
   WHILE Sieve <> []
-  DO
-    BEGIN   
-      FindMultipartNumbers(Max, PrimeNumber, Sieve);   
-      WRITELN
-    END
+  DO  
+    FindMultipartNumbers(Max, PrimeNumber, Sieve);  
+  WRITELN   
 END.
