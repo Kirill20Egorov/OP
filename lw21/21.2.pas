@@ -81,7 +81,7 @@ BEGIN {Encryption}
                 StrLength := StrLength + 1
             END 
           ELSE
-            WRITE('(Недопустимый символ: ', Msg[StrLength], ')');               
+            WRITE('(Недопустимый символ: ', Msg[StrLength], ')')               
         END;
       IF StrLength < Len
       THEN
