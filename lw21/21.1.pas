@@ -7,7 +7,8 @@ TYPE
 VAR
   Msg: Str;
   Code: Chiper;
-  I: INTEGER;
+  I: INTEGER; 
+  StrLength: 1 .. Len; 
 PROCEDURE Initialize(VAR Code: Chiper);
 {Присвоить Code шифр замены}
 BEGIN {Initialize}
@@ -42,9 +43,9 @@ END;  {Initialize}
 PROCEDURE Encode(VAR S: Str);
 {Выводит символы из Code, соответствующие символам из S}
 VAR
-  Index: 1 .. Len;
+  Index: 1..Len;
 BEGIN {Encode}
-  FOR Index := 1 TO I
+  FOR Index := 1 TO StrLength
   DO
     IF S[Index] IN [' ' .. 'Z']
     THEN
@@ -60,14 +61,21 @@ BEGIN {Encryption}
   DO
     BEGIN
       {читать строку в  Msg и распечатать её}
-      I := 0;
-      WHILE NOT EOLN AND (I < Len)
+      StrLength := 1;
+      WHILE NOT EOLN AND (StrLength < Len)
       DO
         BEGIN      
-          I := I + 1;
-          READ(Msg[I]);
-          WRITE(Msg[I])
+          READ(Msg[StrLength]); 
+          WRITE(Msg[StrLength]);
+          IF NOT EOLN
+          THEN
+            StrLength := StrLength + 1
         END;
+      IF StrLength < Len
+      THEN
+        FOR I := StrLength + 1 TO Len
+        DO
+          Msg[I] := '-';
       READLN;
       WRITELN;
       Encode(Msg)

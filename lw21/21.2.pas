@@ -2,12 +2,15 @@ PROGRAM Encryption(INPUT, OUTPUT);
 CONST
   Len = 20;
 TYPE
+  SetOfCode = SET OF ' ' .. 'Z';
   Str = ARRAY [1 .. Len] OF ' ' .. 'Z';
   Chiper = ARRAY [' ' .. 'Z'] OF CHAR;
 VAR
+  SieveChars: SetOfCode;
   Msg: Str;
   Code: Chiper;
   I: INTEGER;
+  StrLength: 1 .. Len;
   Cipher: TEXT;
 PROCEDURE Initialize(VAR Code: Chiper);
 {Присвоить Code шифр замены}
@@ -45,7 +48,7 @@ PROCEDURE Encode(VAR S: Str);
 VAR
   Index: 1 .. Len;
 BEGIN {Encode}
-  FOR Index := 1 TO I
+  FOR Index := 1 TO StrLength
   DO
     IF S[Index] IN [' ' .. 'Z']
     THEN
@@ -56,6 +59,7 @@ BEGIN {Encode}
 END;  {Encode}
 BEGIN {Encryption}
   {Инициализировать Code}
+  SieveChars := ['A' .. 'Z'] + [' '];
   ASSIGN(cipher, 'cipher.txt');
   RESET(Cipher);
   Initialize(Code);
@@ -63,14 +67,27 @@ BEGIN {Encryption}
   DO
     BEGIN
       {читать строку в  Msg и распечатать её}
-      I := 0;
-      WHILE NOT EOLN(Cipher) AND (I < Len)
+      StrLength := 1;
+      WHILE NOT EOLN(Cipher) AND (StrLength < Len)
       DO
         BEGIN      
-          I := I + 1;
-          READ(Cipher, Msg[I]);
-          WRITE(OUTPUT, Msg[I])
+          READ(Cipher, Msg[StrLength]); 
+          IF Msg[StrLength] IN SieveChars
+          THEN
+            BEGIN
+              WRITE(Msg[StrLength]);
+              IF NOT EOLN(Cipher)
+              THEN
+                StrLength := StrLength + 1
+            END 
+          ELSE
+            WRITE('(Недопустимый символ: ', Msg[StrLength], ')');               
         END;
+      IF StrLength < Len
+      THEN
+        FOR I := StrLength + 1 TO Len
+        DO
+          Msg[I] := '-';
       READLN(Cipher);
       WRITELN;
       Encode(Msg)
