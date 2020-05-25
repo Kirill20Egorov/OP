@@ -7,8 +7,7 @@ TYPE
 VAR
   Msg: Str;
   Code: Chiper;
-  I: INTEGER; 
-  StrLength: 1 .. Len; 
+  StrLength: INTEGER; 
 PROCEDURE Initialize(VAR Code: Chiper);
 {Присвоить Code шифр замены}
 BEGIN {Initialize}
@@ -23,7 +22,7 @@ BEGIN {Initialize}
   Code['H'] := 'S';
   Code['I'] := 'I';
   Code['J'] := 'Q';
-  Code['K'] := 'P';
+  Code['K'] := 'P';                                                       
   Code['L'] := '!';
   Code['M'] := 'N';
   Code['N'] := 'M';
@@ -40,7 +39,7 @@ BEGIN {Initialize}
   Code['Y'] := 'B';
   Code['Z'] := 'A'
 END;  {Initialize} 
-PROCEDURE Encode(VAR S: Str);
+PROCEDURE Encode(VAR S: Str; VAR StrLength: INTEGER);
 {Выводит символы из Code, соответствующие символам из S}
 VAR
   Index: 1..Len;
@@ -71,14 +70,9 @@ BEGIN {Encryption}
           THEN
             StrLength := StrLength + 1
         END;
-      IF StrLength < Len
-      THEN
-        FOR I := StrLength + 1 TO Len
-        DO
-          Msg[I] := '-';
       READLN;
       WRITELN;
-      Encode(Msg)
+      Encode(Msg, StrLength)
     END
 END.  {Encryption}
 
