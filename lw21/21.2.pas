@@ -11,6 +11,7 @@ VAR
   Code: Chiper;
   I: INTEGER;
   StrLength: 1 .. Len;
+  CorrectData: BOOLEAN;
   Cipher: TEXT;
 PROCEDURE Initialize(VAR Code: Chiper);
 {Присвоить Code шифр замены}
@@ -50,15 +51,14 @@ VAR
 BEGIN {Encode}
   FOR Index := 1 TO StrLength
   DO
-    IF S[Index] IN [' ' .. 'Z']
+    IF S[Index] IN SieveChars
     THEN
-      WRITE(Code[S[Index]])
-    ELSE
-      WRITE(S[Index]);
+      WRITE(Code[S[Index]]);
   WRITELN
 END;  {Encode}
 BEGIN {Encryption}
   {Инициализировать Code}
+  CorrectData := TRUE;
   SieveChars := ['A' .. 'Z'] + [' '];
   ASSIGN(cipher, 'cipher.txt');
   RESET(Cipher);
@@ -80,17 +80,22 @@ BEGIN {Encryption}
               THEN
                 StrLength := StrLength + 1
             END 
-          ELSE
-            WRITE('(Недопустимый символ: ', Msg[StrLength], ')')               
+          ELSE                               
+            BEGIN
+              WRITE('(Недопустимый символ: ', Msg[StrLength], ')');
+              CorrectData := FALSE
+            END               
         END;
-      IF StrLength < Len
-      THEN
-        FOR I := StrLength + 1 TO Len
-        DO
-          Msg[I] := '-';
-      READLN(Cipher);
       WRITELN;
-      Encode(Msg)
+      IF CorrectData = TRUE
+      THEN
+        Encode(Msg)
+      ELSE
+        BEGIN
+          WRITELN('Данная строка не будет зашифрована. Был введен недопустимый символ');
+          CorrectData := TRUE
+        END;
+      READLN(Cipher)
     END
 END.  {Encryption}
 
