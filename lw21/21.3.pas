@@ -93,9 +93,9 @@ BEGIN {Encryption}
       ELSE
         BEGIN
           WRITELN('Строка не будет зашифрована, был введен недопустимый символ');
-          CorrectData := TRUE;
+          CorrectData := TRUE
         END;
-      READLN(DeCipher);
+      READLN(DeCipher)
     END
 END.  {Encryption}
 
