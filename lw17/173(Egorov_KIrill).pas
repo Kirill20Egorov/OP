@@ -1,10 +1,11 @@
-PROGRAM TestReadNumber(INPUT, OUTPUT);
+PROGRAM Stat(INPUT, OUTPUT);
 VAR
-  Number: INTEGER;
+  Count, Number, Min, Max, Sum, Ave: INTEGER;
+  Check: BOOLEAN; 
 PROCEDURE ReadDigit(VAR F: TEXT; VAR D: INTEGER);
-{Г‘Г·ГЁГІГ»ГўГ ГҐГІ ГІГҐГЄГіГ№ГЁГ© Г±ГЁГ¬ГўГ®Г« ГЁГ§ ГґГ Г©Г«Г , ГҐГ±Г«ГЁ Г®Г­ - Г¶ГЁГґГ°Г , ГўГ®Г§ГўГ°Г Г№Г ГҐГІ ГҐГЈГ® 
- ГЇГ°ГҐГ®ГЎГ°Г Г§ГіГї Гў Г§Г­Г Г·ГҐГ­ГЁГҐ ГІГЁГЇГ  INTEGER. Г…Г±Г«ГЁ Г±Г·ГЁГІГ Г­Г­Г»Г© Г±ГЁГ¬ГўГ®Г« Г­ГҐ Г¶ГЁГґГ°Г 
- ГўГ®Г§ГўГ°Г Г№Г ГҐГІ -1}
+{Считывает текущий символ из файла, если он - цифра, возвращает его 
+ преобразуя в значение типа INTEGER. Если считанный символ не цифра
+ возвращает -1}
 VAR
   Ch: CHAR;
 BEGIN {ReadDigit}
@@ -32,7 +33,6 @@ BEGIN {ReadNumber}
   Digit := 0;
   N := 0;
   Check := TRUE;
-  WRITELN('MAXINT=', MAXINT);
   WHILE (Check) AND NOT(EOLN(INPUT))
   DO
     BEGIN
@@ -40,9 +40,6 @@ BEGIN {ReadNumber}
       IF Digit <> -1
       THEN
         BEGIN
-          // РџРѕСЏСЃРЅРµРЅРёРµ Рє СѓСЃР»РѕРІРёСЋ:
-          //(Р•РЎР›Р Р‘Р•Р— РњР›Р”РђРЁРРҐ Р РђР—Р РЇР”РћР’ Р’Р’Р•Р”Р•РќРќРћР• Р§РРЎР›Рћ Р‘РЈР”Р•Рў РЈР–Р• Р‘РћР›Р¬РЁР• Р§Р•Рњ MAXIT ) OR
-          // ((Р’РЎР• Р РђР—Р РЇР”Р« Р РђР’РќР«) AND (РњР›РђР”РЁРР™ Р РђР—Р РЇР” Р’Р’Р•Р”Р•РќРќРћР“Рћ Р§РРЎР›Рђ Р‘РћР›Р¬РЁР• Р§Р•Рњ РЈ MAXINT))
           IF  ((MAXINT DIV 10 < N) OR (((MAXINT DIV 10 = N) AND ((MAXINT MOD 10) < Digit))))
           THEN
             BEGIN
@@ -61,6 +58,43 @@ BEGIN {ReadNumber}
     END
 END; {ReadNumber}
 BEGIN {TestReadNumber}
-  ReadNumber(INPUT, Number);
-  WRITELN(Number)
+  Sum := 0;
+  Number := 0;
+  Count := 0;
+  Min := MAXINT;
+  Max := 0;
+  Check := TRUE;
+  WHILE NOT EOLN(INPUT)
+  DO
+    BEGIN
+      ReadNumber(INPUT, Number);
+      IF  (MAXINT - Number < Sum)
+      THEN
+        WRITELN('Error the sum > MAXINT')
+      ELSE
+        BEGIN
+          Sum := Sum + Number;
+          IF Number > Max
+          THEN
+            Max := Number;
+          IF Number < Min
+          THEN
+            Min := Number;
+          IF NOT EOLN
+          THEN
+            BEGIN
+              Check := TRUE;
+              Number := 0
+            END;
+          Count := Count + 1
+        END
+    END;
+  IF Count <> 0
+  THEN
+    BEGIN
+      WRITELN('Введено чисел: ', Count);
+      WRITELN('Сумма всех: ', Sum, ' Среднее арифм: ', Sum DIV Count, '.', Sum MOD Count * 100 DIV Count);
+      WRITELN('Min: ', Min);
+      WRITELN('Max: ', Max)
+    END
 END.  {TestReadNumber}

@@ -8,6 +8,7 @@ PROCEDURE ReadDigit(VAR F: TEXT; VAR D: INTEGER);
 VAR
   Ch: CHAR;
 BEGIN {ReadDigit}
+  D := 0;
   READ(F, Ch);
   IF Ch = '0' THEN D := 0 ELSE
   IF Ch = '1' THEN D := 1 ELSE    
