@@ -13,36 +13,31 @@ VAR
   StrLength: 1 .. Len;
   CorrectData: BOOLEAN;
   Cipher: TEXT;
-PROCEDURE Initialize(VAR Code: Chiper);
+PROCEDURE Initialize(VAR Cipher: TEXT; VAR Code: Chiper; VAR SieveChars: SetOfCode);
+VAR 
+  Check: BOOLEAN;      
+  Ch, ChCode: CHAR;
 {Присвоить Code шифр замены}
-BEGIN {Initialize}
-  Code[' '] := '1';
-  Code['A'] := 'Z';
-  Code['B'] := 'Y';
-  Code['C'] := 'X';
-  Code['D'] := '#';
-  Code['E'] := 'V';
-  Code['F'] := 'U';
-  Code['G'] := 'T';
-  Code['H'] := 'S';
-  Code['I'] := 'I';
-  Code['J'] := 'Q';
-  Code['K'] := 'P';
-  Code['L'] := '!';
-  Code['M'] := 'N';
-  Code['N'] := 'M';
-  Code['O'] := '2';
-  Code['P'] := 'K';
-  Code['Q'] := '$';
-  Code['R'] := 'D';
-  Code['S'] := 'H';
-  Code['T'] := '*';
-  Code['U'] := 'F';
-  Code['V'] := 'E';
-  Code['W'] := 'T';
-  Code['X'] := 'C';
-  Code['Y'] := 'B';
-  Code['Z'] := 'A'
+BEGIN {Initialize} 
+  Check := TRUE; 
+  WHILE NOT EOF(Cipher) AND Check
+  DO
+    BEGIN
+      READ(Cipher, ChCode);
+      IF ChCode IN SieveChars
+      THEN
+        BEGIN 
+          READ(Cipher, Ch);
+          IF Ch IN SieveChars
+          THEN
+            Code[ChCode] := Ch
+          ELSE
+            Check := FALSE
+        END
+      ELSE
+        Check := FALSE;
+      READLN(Cipher)   
+    END
 END;  {Initialize}
 PROCEDURE Encode(VAR S: Str);
 {Выводит символы из Code, соответствующие символам из S}
@@ -59,24 +54,24 @@ END;  {Encode}
 BEGIN {Encryption}
   {Инициализировать Code}
   CorrectData := TRUE;
-  SieveChars := ['A' .. 'Z'] + [' '];
+  SieveChars := [' ' .. 'Z']; 
   ASSIGN(cipher, 'cipher.txt');
-  RESET(Cipher);
-  Initialize(Code);
-  WHILE NOT EOF(Cipher)
+  RESET(Cipher);    
+  Initialize(Cipher, Code, SieveChars);
+  WHILE NOT EOF(INPUT)
   DO
     BEGIN
       {читать строку в  Msg и распечатать её}
       StrLength := 1;
-      WHILE NOT EOLN(Cipher) AND (StrLength < Len)
+      WHILE NOT EOLN(INPUT) AND (StrLength < Len)
       DO
         BEGIN      
-          READ(Cipher, Msg[StrLength]); 
+          READ(INPUT, Msg[StrLength]); 
           IF Msg[StrLength] IN SieveChars
           THEN
             BEGIN
               WRITE(Msg[StrLength]);
-              IF NOT EOLN(Cipher)
+              IF NOT EOLN(INPUT)
               THEN
                 StrLength := StrLength + 1
             END 
@@ -95,7 +90,7 @@ BEGIN {Encryption}
           WRITELN('Данная строка не будет зашифрована. Был введен недопустимый символ');
           CorrectData := TRUE
         END;
-      READLN(Cipher)
+      READLN(INPUT)
     END
 END.  {Encryption}
 
