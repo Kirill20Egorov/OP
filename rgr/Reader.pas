@@ -1,15 +1,13 @@
 UNIT Reader;
 
 INTERFACE
-
-FUNCTION ReadWord(VAR FIn: TEXT): STRING;
-FUNCTION IsFoundWord(VAR Word: STRING): BOOLEAN;
+  FUNCTION ReadWord(VAR FIn: TEXT): STRING;
+  FUNCTION IsFoundWord(VAR Word: STRING): BOOLEAN;
   
-IMPLEMENTATION
-   
+IMPLEMENTATION  
 CONST
-  AllowedSymbols = ['A' .. 'Z'] + ['a' .. 'z'] + ['À' .. 'ß'] + ['à' .. 'ÿ'];
-  Upper = ['A' .. 'Z'] + ['À' .. 'ß'];
+  AllowedSymbols = ['A' .. 'Z'] + ['a' .. 'z'] + ['Ã€' .. 'ÃŸ'] + ['Ã ' .. 'Ã¿'];
+  Upper = ['A' .. 'Z'] + ['Ã€' .. 'ÃŸ'];
   
 PROCEDURE GetLower(VAR Ch: CHAR);
 BEGIN
